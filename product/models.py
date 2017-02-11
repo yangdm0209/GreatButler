@@ -12,6 +12,8 @@ class Product(models.Model):
     price_wholesale = models.FloatField(verbose_name="批发售价")
     price_retail = models.FloatField(verbose_name="终端售价")
     specification = models.CharField(max_length=128, verbose_name="规格", blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    other = models.CharField(max_length=128, verbose_name='其他信息', blank=True)
 
     def __unicode__(self):
         return self.name
