@@ -4,45 +4,65 @@
 {% endblock %}
 
 {% block css %}
-
+<link rel="stylesheet" href="/static/css/bootstrap-editable.css">
 {% endblock %}
 {% block content %}
 <div class="container">
     <H1 class="hidden">新建采购</H1>
-    <div class="gray-border">
-
-    </div>
 
     <div class="panel panel-info">
         <div class="panel-heading">新增采购单</div>
         <div class="panel-body">
-            Basic panel example
+            <div class="form-inline">
+                <div class="form-group col-sm-4">
+                    <label class="control-label">供应商:&nbsp;&nbsp;&nbsp;</label>
+                    <select class="form-control" name="supporter">
+                        <option data-index="0">--------------选择供应商--------------</option>
+                        <option data-index="1">公牛电器</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="control-label">仓库:&nbsp;&nbsp;&nbsp;</label>
+                    <select class="form-control" name="stock">
+                        <option data-index="0">--------------选择仓库--------------</option>
+                        <option data-index="1">公牛电器</option>
+                        <option data-index="1">公牛电器公牛电器公牛电器公牛电器</option>
+                    </select>
+                </div>
+            </div>
         </div>
+
         <!-- Table -->
-        <div class="table-responsive padding-15">
-            <table class="table table-bordered">
-                <caption>货品清单</caption>
+        <div class="table-responsive panel-body">
+            <table id="productDetail" class="table table-bordered">
+                <caption style="font-size:18px; text-align:center;"><strong>货品清单</strong></caption>
+                <colgroup>
+                    <col style="width:40%;" >
+                    <col style="width:30%;" >
+                    <col style="width:30%;" >
+                </colgroup>
                 <thead>
                 <tr>
                     <th>名称</th>
-                    <th>城市</th>
+                    <th>数量</th>
+                    <th>价格</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>Tanmay</td>
-                    <td>Bangalore</td>
-                </tr>
-                <tr>
-                    <td>Sachin</td>
-                    <td>Mumbai</td>
+                    <td><a href="#" class="select-product">防过充</a></td>
+                    <td><a href="#" class="editable-num">12</a></td>
+                    <td><a href="#" class="editable-price">25.0</a></td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <div class="panel-body">
-            Basic panel example
-        </div>
+
     </div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+<script src="/static/js/bootstrap-editable.min.js"></script>
+<script src="/static/purchase/new.js"></script>
 {% endblock %}
