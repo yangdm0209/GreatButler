@@ -57,7 +57,7 @@ class Custom(models.Model):
 class Saler(models.Model):
     name = models.CharField(max_length=64, verbose_name='名字', db_index=True)
     tel = models.CharField(max_length=20, verbose_name='联系电话', db_index=True)
-    addr = models.CharField(max_length=128, verbose_name='客户地址', db_index=True)
+    addr = models.CharField(max_length=128, verbose_name='家庭地址', db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     other = models.CharField(max_length=128, verbose_name='其他信息', blank=True)
 

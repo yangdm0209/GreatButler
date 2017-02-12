@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 """greatButler URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -14,11 +17,24 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from web import views
+from web import views, purchase
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.index),
-    url(r'^login/$', views.login),
-    url(r'^logout/$', views.logout),
+    url(r'^accounts/login/$', views.login),
+    url(r'^accounts/logout/$', views.logout),
+
+    # 采购相关
+    url(r'^purchase/$', purchase.purchase),
+    url(r'^purchase/new/$', purchase.new),
+    url(r'^purchase/refunds/$', purchase.refunds),
+
+    # 销售相关
+
+    # 仓库相关
+
+    # 资金相关
+
+    # 资料相关
 ]
