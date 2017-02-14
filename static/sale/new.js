@@ -1,10 +1,10 @@
 var products=[]
-var productItem = '<tr><td class="hidden">-1</td><td class="select-product">请选择产品</td><td class="editable-num">输入数量</td><td class="editable-price">输入价格</td><td><a onclick="insertTr(this);" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a><a onclick="deleteTr(this);"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a></td></tr>';
+var productItem = '<tr><td class="hidden">-1</td><td class="select-product">请选择产品</td><td class="editable-num">输入数量</td><td class="editable-price">输入价格</td><td class="editable-scale">1</td><td><a onclick="insertTr(this);" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a><a onclick="deleteTr(this);"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a></td></tr>';
 
-function getProductCost(index){
+function getProductPrice(index){
     for (item in products){
         if (products[item].id==index){
-            return products[item].cost
+        return products[item].price
         }
     }
     return ''
@@ -24,7 +24,7 @@ function makeEditable(){
             return result;
         },
         success: function(response, newValue) {
-            var price = getProductCost(newValue);
+            var price = getProductPrice(newValue);
             this.parentNode.children[0].innerText=newValue;
             this.parentNode.children[3].innerText=1;
             this.parentNode.children[4].innerText=price;
@@ -49,6 +49,21 @@ function makeEditable(){
         success: function(response, newValue) {
             this.innerText = newValue;
             updateTotal();
+        }
+    });
+    $('.editable-scale').editable({
+        type: 'text',
+        mode: 'inline',
+        url: '',
+        title: '修改折扣',
+        success: function(response, newValue) {
+            if (newValue >= 0.1 && newValue <= 1){
+                this.innerText = newValue;
+                updateTotal();
+            }
+            else {
+                return '折扣率必须为0.1到1之间';
+            }
         }
     });
 }
@@ -85,9 +100,9 @@ function updateTotal(){
         if (proId > 0){
             totalPro += 1;
             totalNums += parseInt(tdArr.eq(2).text());
-            totalPrice += tdArr.eq(2).text() * tdArr.eq(3).text();
+            totalPrice += tdArr.eq(2).text() * tdArr.eq(3).text()*tdArr.eq(4).text();
 
-            items.push({pid: proId, pnum:tdArr.eq(2).text(), pprice:tdArr.eq(3).text()});
+            items.push({pid: proId, pnum:tdArr.eq(2).text(), pprice:tdArr.eq(3).text(), pscale:tdArr.eq(4).text()});
         }
     }
     $("#totalPros").text(totalPro);
@@ -108,7 +123,7 @@ function submit(){
         return;
     }
 
-    $.post("/purchase/new/",
+    $.post("/sale/new/",
     {
         data:JSON.stringify({stock:stock,
                              supporter:supporter,

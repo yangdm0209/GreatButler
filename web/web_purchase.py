@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 
-from custom.custiom_tool import get_providers
+from custom.custom_tool import get_providers
 from custom.models import Provider
 from product.models import Product
 from purchase.models import Purchase, PurchaseDetail
@@ -21,10 +21,10 @@ def purchase(request):
     return render_to_response('purchase/main.html', RequestContext(request, {'purchase_active': 1}))
 
 
-@csrf_exempt
+# @csrf_exempt
+@login_required
 def new(request):
     if request.method == 'GET':
-        providers = "[{value:'1',text:'研发部'},{value:'2',text:'销售部'},{value:'3',text:'行政部'}]"
         return render_to_response('purchase/new.html',
                                   RequestContext(request, {'purchase_active': 1,
                                                            'providers': get_providers(),
@@ -36,7 +36,7 @@ def new(request):
         else:
             all = json.loads(data)
             p = Purchase()
-            p.custom = Provider.objects.get(id=all['supporter'])
+            p.provider = Provider.objects.get(id=all['supporter'])
             p.stock = Stock.objects.get(id=all['stock'])
             p.save()
             for item in all['detail']:
@@ -45,7 +45,7 @@ def new(request):
                 pro.num = item['pnum']
                 pro.price = item['pprice']
                 pro.save()
-                p.items.add(pro)
+                p.detail.add(pro)
             p.save()
             return success_response('添加成功')
 

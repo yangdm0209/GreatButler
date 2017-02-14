@@ -7,11 +7,17 @@ from django.shortcuts import render, render_to_response
 
 # Create your views here.
 from django.template import RequestContext
+from django.utils.timezone import now, timedelta
+
+from purchase.models import Purchase
 
 
 @login_required
 def index(request):
-    return render_to_response('index.html', RequestContext(request))
+    start = now().date()
+    end = start + timedelta(days=1)
+    purchases = Purchase.objects.all().filter(created_at__range=(start, end)).count()
+    return render_to_response('index.html', RequestContext(request, {'purchases': purchases}))
 
 
 def login(request):

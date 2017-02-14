@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}
+超级管家-进销存管理系统
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/bootstrap-table.min.css">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <H1 class="hidden">新建采购</H1>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">新增采购单</div>
+        <div class="panel-body">
+            <table data-toggle="table" data-striped="true">
+                <thead>
+                <tr>
+                    <th>Item ID</th>
+                    <th>Item Name</th>
+                    <th>Item Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <select class="form-control" placeholder="选择供应商">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                    </td>
+                    <td>Item 1</td>
+                    <td>12.5</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Item 2</td>
+                    <td>34.0</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Item 3</td>
+                    <td>24.0</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="/static/js/bootstrap-table.min.js"></script>
+<script src="/static/js/bootstrap-table-zh-CN.min.js"></script>
+{% endblock %}

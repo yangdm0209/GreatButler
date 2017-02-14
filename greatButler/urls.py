@@ -20,6 +20,7 @@ from django.contrib import admin
 from web import views, web_purchase
 from custom import views as customapi
 from product import views as productapi
+from web import web_sale
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -37,7 +38,9 @@ urlpatterns = [
     url(r'^purchase/list/$', customapi.get_provider),
 
     # 销售相关
-
+    url(r'^sale/$', web_sale.sale),
+    url(r'^sale/new/$', web_sale.new),
+    url(r'^sale/refunds/$', web_sale.refunds),
     # 仓库相关
 
     # 资金相关
