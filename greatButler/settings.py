@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 """
 Django settings for greatButler project.
 
@@ -25,6 +28,20 @@ SECRET_KEY = 'd35)6kul*tq@i4qxo&d9m7y4f3e@2h734u!2$qs45ri5bl&6g3'
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
+
+# 邮件配置
+EMAIL_HOST = 'smtp.exmail.qq.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'yangdaming@dashuqinzi.com'
+EMAIL_HOST_PASSWORD = 'Wearesure2win'
+EMAIL_SUBJECT_PREFIX = u'[GreatButler]'
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = True
+EMAIL_TIMEOUT = 10
+# 管理员站点
+SERVER_EMAIL = 'yangdaming@dashuqinzi.com'
+ADMINS = (("daming", "yangdaming@dashuqinzi.com"))
+MANAGERS = ADMINS
 
 # Application definition
 

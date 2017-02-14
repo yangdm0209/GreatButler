@@ -67,3 +67,18 @@ class Saler(models.Model):
     class Meta:
         verbose_name_plural = '业务员信息'
         verbose_name = '业务员信息'
+
+
+class Provider(models.Model):
+    name = models.CharField(max_length=64, verbose_name='供应商', db_index=True)
+    tel = models.CharField(max_length=20, verbose_name='联系电话', db_index=True)
+    addr = models.CharField(max_length=128, verbose_name='地址', db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    other = models.CharField(max_length=128, verbose_name='其他信息', blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = '供应商信息'
+        verbose_name = '供应商信息'

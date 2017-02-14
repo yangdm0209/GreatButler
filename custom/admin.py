@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from custom.models import Custom, Area, CustomType, Saler
+from custom.models import Custom, Area, CustomType, Saler, Provider
 
 
 @admin.register(Area)
@@ -31,6 +31,14 @@ class CustomAdmin(admin.ModelAdmin):
 
 @admin.register(Saler)
 class SalerAdmin(admin.ModelAdmin):
+    list_display = ['name', 'tel', 'addr', 'other', 'created_at']
+    list_display_links = ['name']
+    fields = ['name', 'tel', 'addr', 'other']
+    search_fields = ['name', 'addr', 'tel']
+    list_filter = ['created_at']
+
+@admin.register(Provider)
+class ProviderAdmin(admin.ModelAdmin):
     list_display = ['name', 'tel', 'addr', 'other', 'created_at']
     list_display_links = ['name']
     fields = ['name', 'tel', 'addr', 'other']

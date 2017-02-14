@@ -17,7 +17,9 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from web import views, purchase
+from web import views, web_purchase
+from custom import views as customapi
+from product import views as productapi
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -25,10 +27,14 @@ urlpatterns = [
     url(r'^accounts/login/$', views.login),
     url(r'^accounts/logout/$', views.logout),
 
+    # 产品相关
+    url(r'^product/list/$', productapi.get_products),
+
     # 采购相关
-    url(r'^purchase/$', purchase.purchase),
-    url(r'^purchase/new/$', purchase.new),
-    url(r'^purchase/refunds/$', purchase.refunds),
+    url(r'^purchase/$', web_purchase.purchase),
+    url(r'^purchase/new/$', web_purchase.new),
+    url(r'^purchase/refunds/$', web_purchase.refunds),
+    url(r'^purchase/list/$', customapi.get_provider),
 
     # 销售相关
 
