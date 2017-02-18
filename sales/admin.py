@@ -7,13 +7,14 @@ from django.contrib import admin
 # Register your models here.
 from django.utils.safestring import mark_safe
 
-from sales.models import Sales, SalesDetail
+from sales.models import Sales, SalesDetail, SalesPay
 
 
 @admin.register(Sales)
 class SalesAdmin(admin.ModelAdmin):
-    list_display = ['custom', 'stock', 'created_at', 'detail_table']
-    fields = ['custom', 'stock']
+    list_display = ['custom', 'stock', 'created_at', 'detail_table', 'pay_status']
+    fields = ['custom', 'stock', 'detail', 'pay_status']
+    list_filter = ['created_at', 'pay_status']
 
     def detail_table(self, obj):
         html = '''
@@ -31,7 +32,7 @@ class SalesAdmin(admin.ModelAdmin):
         '''
         for pro in obj.detail.all():
             html += '<tr><td><a href="/admin/product/product/%s/">%s</a></td><td>%s</td><td>%s</td><td>%s%%</td></tr>' % (
-                pro.product.id, pro.product, pro.num, pro.price, pro.scale)
+                pro.product.id, pro.product, pro.num, pro.price, int(pro.scale * 100))
 
         html += '</tbody></table>'
         html += '''<div>
@@ -48,3 +49,10 @@ class SalesAdmin(admin.ModelAdmin):
 class PurchaseDetailAdmin(admin.ModelAdmin):
     list_display = ['product', 'num', 'price', 'scale']
     fields = ['product', 'num', 'price', 'scale']
+
+
+@admin.register(SalesPay)
+class SalesPayAdmin(admin.ModelAdmin):
+    list_display = ['sales', 'method', 'created_at']
+    fields = ['sales', 'method']
+    list_filter = ['created_at']

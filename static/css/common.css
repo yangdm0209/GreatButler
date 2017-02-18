@@ -36,3 +36,11 @@ a, a:link, a:visited, a:active{
     font-size:100px;
     text-align:center;
 }
+
+.align-center {
+    text-align:center;
+}
+
+.big-font {
+    font-size: 28px;
+}

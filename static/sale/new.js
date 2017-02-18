@@ -1,5 +1,5 @@
 var products=[]
-var productItem = '<tr><td class="hidden">-1</td><td class="select-product">请选择产品</td><td class="editable-num">输入数量</td><td class="editable-price">输入价格</td><td class="editable-scale">1</td><td><a onclick="insertTr(this);" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a><a onclick="deleteTr(this);"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a></td></tr>';
+var productItem = '<tr><td class="hidden">-1</td><td class="select-product">请选择产品</td><td class="editable-num">输入数量</td><td class="editable-price">输入价格</td><td class="editable-scale">1</td><td class="hidden-print"><a onclick="insertTr(this);" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a><a onclick="deleteTr(this);"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a></td></tr>';
 
 function getProductPrice(index){
     for (item in products){
@@ -117,7 +117,7 @@ function updateTotal(){
 function submit(){
     var detail = updateTotal();
     var stock = $('#stock').find("option:selected").attr('data-index');
-    var supporter = $('#supporter').find("option:selected").attr('data-index');
+    var custom = $('#custom').find("option:selected").attr('data-index');
     if (detail.length == 0){
         alert('还没有选择商品');
         return;
@@ -126,7 +126,7 @@ function submit(){
     $.post("/sale/new/",
     {
         data:JSON.stringify({stock:stock,
-                             supporter:supporter,
+                             custom:custom,
                              detail: detail}),
         csrfmiddlewaretoken:$("input[name='csrfmiddlewaretoken']") .val()
     },

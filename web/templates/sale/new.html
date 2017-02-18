@@ -11,14 +11,14 @@
     <H1 class="hidden">新建销售</H1>
 
     <div class="panel panel-info">
-        <div class="panel-heading">新增销售单</div>
+        <div class="panel-heading align-center big-font"><span class="hidden-print">新增</span>销售单</div>
         <div class="panel-body">
             <!--<form class="form-inline" method="post">-->
             <div class="form-inline">
                 {% csrf_token %}
                 <div class="form-group col-sm-4">
                     <label class="control-label">客户:&nbsp;&nbsp;&nbsp;</label>
-                    <select class="form-control" id="supporter">
+                    <select class="form-control" id="custom">
                         {% for p in customs %}
                         <option data-index="{{ p.id }}">{{ p.name }}</option>
                         {% endfor %}
@@ -32,7 +32,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <input id="submit" onclick="submit()" value="提交" class="btn btn-primary col-sm-2 disabled"/>
+                <input id="submit" onclick="submit()" value="提交" class="btn btn-primary col-sm-2 disabled hidden-print"/>
             </div>
 
 
@@ -53,16 +53,16 @@
                         <th>数量</th>
                         <th>单价</th>
                         <th>折扣(0.1-1)</th>
-                        <th></th>
+                        <th class="hidden-print"></th>
                     </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
                 <div>
-                    <div class="col-sm-3"><strong>合计品项：&nbsp;</strong><span id="totalPros">0</span>项</div>
-                    <div class="col-sm-3"><strong>合计数目：&nbsp;</strong><span id="totalNums">0</span>只</div>
-                    <div class="col-sm-3"><strong>合计金额：&nbsp;</strong>￥<span id="totalPrice">0</span></div>
+                    <div class="col-xs-3"><strong>合计品项：&nbsp;</strong><span id="totalPros">0</span>项</div>
+                    <div class="col-xs-3"><strong>合计数目：&nbsp;</strong><span id="totalNums">0</span>只</div>
+                    <div class="col-xs-3"><strong>合计金额：&nbsp;</strong>￥<span id="totalPrice">0</span></div>
                 </div>
             </div>
         </div>

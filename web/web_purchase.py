@@ -21,7 +21,7 @@ def purchase(request):
     return render_to_response('purchase/main.html', RequestContext(request, {'purchase_active': 1}))
 
 
-# @csrf_exempt
+@csrf_exempt
 @login_required
 def new(request):
     if request.method == 'GET':

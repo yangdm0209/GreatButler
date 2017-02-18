@@ -25,6 +25,9 @@ class SalesDetail(models.Model):
 
 
 class Sales(models.Model):
+    PAY_STS = (
+        (0, '未支付'), (1, '已支付')
+    )
     custom = models.ForeignKey(Custom, verbose_name="客户")
     stock = models.ForeignKey(Stock, verbose_name="仓库")
     detail = models.ManyToManyField(SalesDetail, verbose_name="产品")
@@ -33,6 +36,7 @@ class Sales(models.Model):
     total_products = models.IntegerField(verbose_name="合计品项")
     total_nums = models.IntegerField(verbose_name="合计数目")
     total_prices = models.FloatField(verbose_name="合计金额")
+    pay_status = models.IntegerField(verbose_name="支付状态", choices=PAY_STS, default=0)
 
     def __unicode__(self):
         return u'%s 订单-%s' % (self.custom, self.id)
@@ -40,3 +44,16 @@ class Sales(models.Model):
     class Meta:
         verbose_name_plural = "销售"
         verbose_name = "销售"
+
+
+class SalesPay(models.Model):
+    PAY_METHOD = (
+        (0, '现金'), (1, '微信'), (2, '支付宝'), (3, '其他'),
+    )
+    sales = models.ForeignKey(Sales, verbose_name="订单")
+    method = models.IntegerField(verbose_name="支付方式", choices=PAY_METHOD, default=0)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='支付时间')
+
+    class Meta:
+        verbose_name_plural = "订单支付"
+        verbose_name = "订单支付"

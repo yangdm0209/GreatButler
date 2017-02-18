@@ -10,6 +10,7 @@ from django.template import RequestContext
 from django.utils.timezone import now, timedelta
 
 from purchase.models import Purchase
+from sales.models import Sales
 
 
 @login_required
@@ -17,7 +18,8 @@ def index(request):
     start = now().date()
     end = start + timedelta(days=1)
     purchases = Purchase.objects.all().filter(created_at__range=(start, end)).count()
-    return render_to_response('index.html', RequestContext(request, {'purchases': purchases}))
+    sales = Sales.objects.all().filter(created_at__range=(start, end)).count()
+    return render_to_response('index.html', RequestContext(request, {'purchases': purchases, 'sales': sales}))
 
 
 def login(request):

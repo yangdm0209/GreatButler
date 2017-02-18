@@ -1,5 +1,5 @@
 var products=[]
-var productItem = '<tr><td class="hidden">-1</td><td class="select-product">请选择产品</td><td class="editable-num">输入数量</td><td class="editable-price">输入价格</td><td><a onclick="insertTr(this);" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a><a onclick="deleteTr(this);"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a></td></tr>';
+var productItem = '<tr><td class="hidden">-1</td><td class="select-product">请选择产品</td><td class="editable-num">输入数量</td><td class="editable-price">输入价格</td><td class="hidden-print"><a onclick="insertTr(this);" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a><a onclick="deleteTr(this);"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a></td></tr>';
 
 function getProductCost(index){
     for (item in products){
