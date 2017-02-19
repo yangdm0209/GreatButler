@@ -13,7 +13,7 @@ from sales.models import Sales, SalesDetail, SalesPay
 @admin.register(Sales)
 class SalesAdmin(admin.ModelAdmin):
     list_display = ['custom', 'stock', 'created_at', 'detail_table', 'pay_status']
-    fields = ['custom', 'stock', 'detail', 'pay_status']
+    readonly_fields = ['custom', 'stock', 'detail', 'pay_status']
     list_filter = ['created_at', 'pay_status']
 
     def detail_table(self, obj):
@@ -48,11 +48,11 @@ class SalesAdmin(admin.ModelAdmin):
 @admin.register(SalesDetail)
 class PurchaseDetailAdmin(admin.ModelAdmin):
     list_display = ['product', 'num', 'price', 'scale']
-    fields = ['product', 'num', 'price', 'scale']
+    readonly_fields = ['product', 'num', 'price', 'scale']
 
 
 @admin.register(SalesPay)
 class SalesPayAdmin(admin.ModelAdmin):
     list_display = ['sales', 'method', 'created_at']
-    fields = ['sales', 'method']
+    readonly_fields = ['sales', 'method']
     list_filter = ['method', 'created_at']

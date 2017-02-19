@@ -101,7 +101,7 @@ def update_sales_when_delete(sender, instance, **kwargs):
 
 # 有销售时更新库存
 @receiver(post_save, sender=Sales, dispatch_uid="update_stock_sales")
-def update_stock_when_purchase(sender, instance, **kwargs):
+def update_stock_when_sale(sender, instance, **kwargs):
     stock = instance.stock
     for item in instance.detail.all():
         stock.dec(item.product.id, item.num)

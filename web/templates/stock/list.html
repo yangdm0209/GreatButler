@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}
+超级管家-进销存管理系统
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+{% block content %}
+<div class="container">
+    <H1 class="hidden">查看库存</H1>
+    {% for sto in stocks %}
+    <div class="panel panel-success">
+        <div class="panel-heading align-center">{{ sto.name }}的库存</div>
+        <table class="table table-bordered">
+            <thead>
+            <td>产品</td>
+            <td>数量</td>
+            </thead>
+            <tbody>
+            {% for pro in sto.nums.all %}
+            <tr {% if pro.num < 0 %} class="danger" {% endif %}>
+            <td>{{ pro.product.name }}</td>
+            <td>{{ pro.num }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

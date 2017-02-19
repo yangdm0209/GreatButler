@@ -9,18 +9,11 @@ from django.utils.safestring import mark_safe
 from purchase.models import Purchase, PurchaseDetail
 
 
-#
-#
-# class PurchaseDetailShipInline(admin.TabularInline):
-#     model = PurchaseDetailShip
-#     extra = 1  # how many rows to show
-#
-#
 @admin.register(Purchase)
 class PurchaseAdmin(admin.ModelAdmin):
     # inlines = (PurchaseDetailShipInline,)
     list_display = ['provider', 'stock', 'created_at', 'detail_table']
-    fields = ['provider', 'stock', 'detail']
+    readonly_fields = ['provider', 'stock', 'detail']
 
     def detail_list(self, obj):
         pro_list = []
@@ -67,4 +60,4 @@ class PurchaseAdmin(admin.ModelAdmin):
 @admin.register(PurchaseDetail)
 class PurchaseDetailAdmin(admin.ModelAdmin):
     list_display = ['product', 'num', 'price']
-    fields = ['product', 'num', 'price']
+    readonly_fields = ['product', 'num', 'price']

@@ -49,6 +49,7 @@ urlpatterns = [
     # 仓库相关
     url(r'^stock/$', web_stock.stock),
     url(r'^stock/allocate/$', web_stock.allocate),
+    url(r'^stock/list/$', web_stock.list),
 
     # 资金相关
 

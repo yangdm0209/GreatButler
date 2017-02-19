@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
+from stock.models import Stock
+
 
 @login_required
 def stock(request):
@@ -13,3 +15,9 @@ def stock(request):
 @login_required
 def allocate(request):
     return render_to_response('stock/allocate.html', RequestContext(request, {'stock_active': 1}))
+
+
+@login_required
+def list(request):
+    stocks = Stock.objects.all()
+    return render_to_response('stock/list.html', RequestContext(request, {'stock_active': 1, 'stocks': stocks}))

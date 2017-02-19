@@ -6,12 +6,13 @@ from django.contrib import admin
 # Register your models here.
 from django.utils.safestring import mark_safe
 
-from stock.models import ProductNum, Stock
+from stock.models import ProductNum, Stock, Allocate, AllocateNum
 
 
 @admin.register(ProductNum)
 class ProductNumAdmin(admin.ModelAdmin):
     list_display = ['product', 'num', 'belong_stock']
+    readonly_fields = ['product', 'num', 'belong_stock']
 
     def belong_stock(self, obj):
         stock = ''
@@ -25,7 +26,7 @@ class ProductNumAdmin(admin.ModelAdmin):
 @admin.register(Stock)
 class StockAdmin(admin.ModelAdmin):
     list_display = ['name', 'belong', 'detail_table']
-    field = ['name', 'belong', 'nums']
+    readonly_fields = ['name', 'belong', 'nums']
     list_display_links = ['name']
     search_fields = ['name']
 
@@ -49,6 +50,42 @@ class StockAdmin(admin.ModelAdmin):
                     <div class="col-sm-4"><strong>合计品项：&nbsp;</strong><span id="totalPros">%s</span>项</div>
                     <div class="col-sm-4"><strong>合计数目：&nbsp;</strong><span id="totalNums">%s</span>只</div>
                 </div>''' % (obj.total_products, obj.total_nums)
+        return mark_safe(html)
+
+    detail_table.short_description = '详情'
+
+
+@admin.register(AllocateNum)
+class AllocateNumAdmin(admin.ModelAdmin):
+    list_display = ['product', 'num']
+    readonly_fields = ['product', 'num']
+
+
+@admin.register(Allocate)
+class AllocateAdmin(admin.ModelAdmin):
+    list_display = ['source_stock', 'dest_stock', 'detail_table']
+    readonly_fields = ['source_stock', 'dest_stock', 'nums']
+
+    def detail_table(self, obj):
+        html = '''
+                <table class="table table-bordered">
+                    <caption style="font-size:18px; text-align:center;"><strong>调拨清单</strong></caption>
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>数量</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                '''
+        for pro in obj.nums.all():
+            html += '<tr><td><a href="/admin/product/product/%s/">%s</a></td><td>%s</td></tr>' % (
+                pro.product.id, pro.product, pro.num)
+        html += '</tbody></table>'
+        html += '''<div>
+                        <div class="col-sm-4"><strong>合计品项：&nbsp;</strong><span id="totalPros">%s</span>项</div>
+                        <div class="col-sm-4"><strong>合计数目：&nbsp;</strong><span id="totalNums">%s</span>只</div>
+                    </div>''' % (obj.total_products, obj.total_nums)
         return mark_safe(html)
 
     detail_table.short_description = '详情'
