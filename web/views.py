@@ -10,7 +10,7 @@ from django.template import RequestContext
 from django.utils.timezone import now, timedelta
 
 from purchase.models import Purchase
-from sales.models import Sales
+from sales.models import Sales, SalesPay
 
 
 @login_required
@@ -19,7 +19,9 @@ def index(request):
     end = start + timedelta(days=1)
     purchases = Purchase.objects.all().filter(created_at__range=(start, end)).count()
     sales = Sales.objects.all().filter(created_at__range=(start, end)).count()
-    return render_to_response('index.html', RequestContext(request, {'purchases': purchases, 'sales': sales}))
+    pays = SalesPay.objects.all().filter(created_at__range=(start, end)).count()
+    return render_to_response('index.html',
+                              RequestContext(request, {'purchases': purchases, 'sales': sales, 'pays': pays}))
 
 
 def login(request):

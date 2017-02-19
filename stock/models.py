@@ -24,16 +24,22 @@ class ProductNum(models.Model):
 class Stock(models.Model):
     name = models.CharField(max_length=128, verbose_name='仓库名字', db_index=True)
     belong = models.ForeignKey(Saler, verbose_name='业务员')
-    nums = models.ManyToManyField(ProductNum, verbose_name='库存', through='StockProductShip')
+    nums = models.ManyToManyField(ProductNum, verbose_name='库存')
 
     def __unicode__(self):
         return self.name
 
+    @property
+    def total_products(self):
+        return self.nums.all().count()
+
+    @property
+    def total_nums(self):
+        total = 0
+        for item in self.nums.all():
+            total += item.num
+        return total
+
     class Meta:
         verbose_name_plural = "仓库库存"
         verbose_name = "仓库库存"
-
-
-class StockProductShip(models.Model):
-    stock = models.ForeignKey(Stock, verbose_name='仓库')
-    product = models.ForeignKey(ProductNum, verbose_name='产品库存')

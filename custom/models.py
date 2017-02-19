@@ -47,7 +47,7 @@ class Custom(models.Model):
     other = models.CharField(max_length=128, verbose_name='其他信息', blank=True)
 
     def __unicode__(self):
-        return u'%s-%s-%s' % (self.name, self.type, self.tel)
+        return u'%s(%s)' % (self.name, self.area)
 
     class Meta:
         verbose_name_plural = '客户信息'
@@ -64,6 +64,10 @@ class Saler(models.Model):
     def __unicode__(self):
         return self.name
 
+    @property
+    def date(self):
+        return self.created_at.date()
+
     class Meta:
         verbose_name_plural = '业务员信息'
         verbose_name = '业务员信息'
@@ -78,6 +82,10 @@ class Provider(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    @property
+    def date(self):
+        return self.created_at.date()
 
     class Meta:
         verbose_name_plural = '供应商信息'

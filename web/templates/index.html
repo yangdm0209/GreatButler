@@ -31,9 +31,29 @@
         <div class="col-sm-3">
             <div class="blue-block">
                 <span style="color: white">今日收款笔数</span>
-                <div class="warn_nums">0</div>
+                <div class="warn_nums">{{ pays }}</div>
             </div>
         </div>
     </div>
+    <div style="height:20px"></div>
+    <div class="row">
+        <div class="col-sm-6">
+            <canvas id="todaySale" class="chart-block"></canvas>
+        </div>
+        <div class="col-sm-6">
+            <canvas id="weekSale" class="chart-block"></canvas>
+        </div>
+        <div class="col-sm-6">
+            <canvas id="todayStock" class="chart-block"></canvas>
+        </div>
+        <div class="col-sm-6">
+            <canvas id="weekStock" class="chart-block"></canvas>
+        </div>
+    </div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+<script src="/static/js/Chart.min.js"></script>
+<script src="/static/index.js"></script>
 {% endblock %}

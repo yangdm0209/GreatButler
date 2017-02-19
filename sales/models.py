@@ -17,7 +17,7 @@ class SalesDetail(models.Model):
     scale = models.FloatField(verbose_name="折扣率", default=1)
 
     def __unicode__(self):
-        return self.product
+        return u'%s*%s只' % (self.product.name, self.num)
 
     class Meta:
         verbose_name_plural = "销售详情"
@@ -33,13 +33,32 @@ class Sales(models.Model):
     detail = models.ManyToManyField(SalesDetail, verbose_name="产品")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='修改时间')
-    total_products = models.IntegerField(verbose_name="合计品项")
-    total_nums = models.IntegerField(verbose_name="合计数目")
-    total_prices = models.FloatField(verbose_name="合计金额")
     pay_status = models.IntegerField(verbose_name="支付状态", choices=PAY_STS, default=0)
 
     def __unicode__(self):
-        return u'%s 订单-%s' % (self.custom, self.id)
+        return u'%s的订单-%s' % (self.custom, self.date)
+
+    @property
+    def date(self):
+        return self.created_at.date()
+
+    @property
+    def total_products(self):
+        return self.detail.all().count()
+
+    @property
+    def total_nums(self):
+        total = 0
+        for item in self.detail.all():
+            total += item.num
+        return total
+
+    @property
+    def total_prices(self):
+        total = 0
+        for item in self.detail.all():
+            total += item.num * item.price * item.scale
+        return total
 
     class Meta:
         verbose_name_plural = "销售"
@@ -54,6 +73,10 @@ class SalesPay(models.Model):
     method = models.IntegerField(verbose_name="支付方式", choices=PAY_METHOD, default=0)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='支付时间')
 
+    @property
+    def date(self):
+        return self.created_at.date()
+
     class Meta:
-        verbose_name_plural = "订单支付"
-        verbose_name = "订单支付"
+        verbose_name_plural = "销售收款"
+        verbose_name = "销售收款"

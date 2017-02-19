@@ -42,8 +42,8 @@ def new(request):
             for item in all['detail']:
                 pro = PurchaseDetail()
                 pro.product = Product.objects.get(id=item['pid'])
-                pro.num = item['pnum']
-                pro.price = item['pprice']
+                pro.num = int(item['pnum'])
+                pro.price = float(item['pprice'])
                 pro.save()
                 p.detail.add(pro)
             p.save()

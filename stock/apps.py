@@ -6,4 +6,4 @@ from django.apps import AppConfig
 
 class StockConfig(AppConfig):
     name = 'stock'
-    verbose_name = u"库存"
+    verbose_name = u"05. 库存"

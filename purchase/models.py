@@ -6,7 +6,6 @@ from django.db import models
 from custom.models import Provider
 from  product.models import Product
 
-
 # Create your models here.
 from stock.models import Stock
 
@@ -17,7 +16,7 @@ class PurchaseDetail(models.Model):
     price = models.FloatField(verbose_name="采购价格")
 
     def __unicode__(self):
-        return self.product
+        return u'%s*%s只' % (self.product.name, self.num)
 
     class Meta:
         verbose_name_plural = "采购详情"
@@ -32,12 +31,33 @@ class Purchase(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='修改时间')
 
     def __unicode__(self):
-        return u'%s 订单-%s' % (self.provider, self.id)
+        return u'%s的订单-%s' % (self.provider, self.date)
+
+    @property
+    def date(self):
+        return self.created_at.date()
+
+    @property
+    def total_products(self):
+        return self.detail.all().count()
+
+    @property
+    def total_nums(self):
+        total = 0
+        for item in self.detail.all():
+            total += item.num
+        return total
+
+    @property
+    def total_prices(self):
+        total = 0
+        for item in self.detail.all():
+            total += item.num * item.price
+        return total
 
     class Meta:
         verbose_name_plural = "采购"
         verbose_name = "采购"
-
 
 # class PurchaseDetailShip(models.Model):
 #     purchase = models.ForeignKey(Purchase, verbose_name="采购产品")

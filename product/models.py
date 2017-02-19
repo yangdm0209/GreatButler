@@ -18,6 +18,10 @@ class Product(models.Model):
     def __unicode__(self):
         return self.name
 
+    @property
+    def date(self):
+        return self.created_at.date()
+
     class Meta:
         verbose_name_plural = "产品信息"
         verbose_name = "产品信息"

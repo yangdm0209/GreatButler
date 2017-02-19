@@ -20,7 +20,7 @@ from purchase.models import Purchase, PurchaseDetail
 class PurchaseAdmin(admin.ModelAdmin):
     # inlines = (PurchaseDetailShipInline,)
     list_display = ['provider', 'stock', 'created_at', 'detail_table']
-    fields = ['provider', 'stock']
+    fields = ['provider', 'stock', 'detail']
 
     def detail_list(self, obj):
         pro_list = []
@@ -49,21 +49,15 @@ class PurchaseAdmin(admin.ModelAdmin):
             </thead>
             <tbody>
         '''
-        totalPro = 0
-        totalNum = 0
-        totalPrice = 0
         for pro in obj.detail.all():
             html += '<tr><td><a href="/admin/product/product/%s/">%s</a></td><td>%s</td><td>%s</td></tr>' % (
                 pro.product.id, pro.product, pro.num, pro.price)
-            totalPro += 1
-            totalNum += pro.num
-            totalPrice += pro.num * pro.price
         html += '</tbody></table>'
         html += '''<div>
                     <div class="col-sm-4"><strong>合计品项：&nbsp;</strong><span id="totalPros">%s</span>项</div>
                     <div class="col-sm-4"><strong>合计数目：&nbsp;</strong><span id="totalNums">%s</span>只</div>
                     <div class="col-sm-4"><strong>合计金额：&nbsp;</strong>￥<span id="totalPrice">%s</span></div>
-                </div>''' % (totalPro, totalNum, totalPrice)
+                </div>''' % (obj.total_products, obj.total_nums, obj.total_prices)
         return mark_safe(html)
 
     detail_list.short_description = '详情'

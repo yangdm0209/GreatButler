@@ -39,9 +39,6 @@ def new(request):
             s = Sales()
             s.custom = Custom.objects.get(id=all['custom'])
             s.stock = Stock.objects.get(id=all['stock'])
-            s.total_products = 0
-            s.total_nums = 0
-            s.total_prices = 0
             s.save()
             for item in all['detail']:
                 pro = SalesDetail()
@@ -50,9 +47,6 @@ def new(request):
                 pro.price = float(item['pprice'])
                 pro.scale = float(item['pscale'])
                 pro.save()
-                s.total_products += 1
-                s.total_nums += pro.num
-                s.total_prices += pro.num * pro.price * pro.scale
                 s.detail.add(pro)
             s.save()
             return success_response('添加成功')

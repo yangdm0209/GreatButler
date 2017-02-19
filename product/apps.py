@@ -6,4 +6,4 @@ from django.apps import AppConfig
 
 class ProductConfig(AppConfig):
     name = 'product'
-    verbose_name = u"产品"
+    verbose_name = u"04. 产品"

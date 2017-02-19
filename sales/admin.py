@@ -55,4 +55,4 @@ class PurchaseDetailAdmin(admin.ModelAdmin):
 class SalesPayAdmin(admin.ModelAdmin):
     list_display = ['sales', 'method', 'created_at']
     fields = ['sales', 'method']
-    list_filter = ['created_at']
+    list_filter = ['method', 'created_at']
