@@ -4,11 +4,61 @@
 {% endblock %}
 
 {% block css %}
-
+<link rel="stylesheet" href="/static/css/bootstrap-editable.css">
 {% endblock %}
 {% block content %}
 <div class="container">
     <H1 class="hidden">仓库调拨</H1>
+    <div class="panel panel-info">
+        <div class="panel-heading align-center big-font">仓库调拨</div>
+        <div class="panel-body">
+            <div class="form-inline">
+                {% csrf_token %}
+                <div class="form-group col-sm-4">
+                    <label class="control-label">调出仓库:&nbsp;&nbsp;&nbsp;</label>
+                    <select class="form-control" id="source_stock">
+                        {% for s in stocks %}
+                        <option data-index="{{ s.id }}">{{ s.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="control-label">调入仓库:&nbsp;&nbsp;&nbsp;</label>
+                    <select class="form-control" id="dest_stock">
+                        {% for s in stocks %}
+                        <option data-index="{{ s.id }}">{{ s.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input id="submit" onclick="submit()" value="提交"
+                       class="btn btn-primary col-sm-2 disabled hidden-print"/>
+            </div>
+            <div class="panel-body">
+                <table id="productDetail" class="table table-bordered">
+                    <caption style="font-size:18px; text-align:center;"><strong>货品清单</strong></caption>
+                    <thead>
+                    <tr>
+                        <th class="hidden">id</th>
+                        <th>名称</th>
+                        <th>数量</th>
+                        <th class="hidden-print"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
+                    </tbody>
+                </table>
+                <div>
+                    <div class="col-xs-3"><strong>合计品项：&nbsp;</strong><span id="totalPros">0</span>项</div>
+                    <div class="col-xs-3"><strong>合计数目：&nbsp;</strong><span id="totalNums">0</span>只</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+<script src="/static/js/bootstrap-editable.min.js"></script>
+<script src="/static/stock/allocate.js"></script>
 {% endblock %}
