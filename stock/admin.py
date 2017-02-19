@@ -3,7 +3,6 @@
 
 from django.contrib import admin
 
-
 # Register your models here.
 from django.utils.safestring import mark_safe
 
@@ -12,8 +11,16 @@ from stock.models import ProductNum, Stock
 
 @admin.register(ProductNum)
 class ProductNumAdmin(admin.ModelAdmin):
-    list_display = ['product', 'num']
-    field = ['product', 'num']
+    list_display = ['product', 'num', 'belong_stock']
+
+    def belong_stock(self, obj):
+        stock = ''
+        for s in obj.stock.all():
+            stock += s.name
+        return mark_safe(stock)
+
+    belong_stock.short_description = '所属仓库'
+
 
 @admin.register(Stock)
 class StockAdmin(admin.ModelAdmin):

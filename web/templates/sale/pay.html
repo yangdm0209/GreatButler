@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}
+超级管家-进销存管理系统
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+{% block content %}
+<div class="container">
+    {% if error %}
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        {{ error }}
+    </div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        {{ success }}
+    </div>
+    {% endif %}
+
+    {% if not unpay %}
+    <div class="alert alert-success" role="alert">当前没有未付款的订单</div>
+    {% else %}
+    <div class="panel panel-success">
+        <div class="panel-heading align-center">待付款销售单</div>
+        <div class="panel-body">
+            <div class="panel-group" id="accordion">
+                {% for sal in sales %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <a data-toggle="collapse" data-parent="#accordion"
+                               href="#collapse{{ sal.id }}">
+                                <div class="col-xs-3 panel-title" >
+                                    <span class="glyphicon glyphicon-chevron-down"></span>&nbsp;&nbsp;
+                                    <strong>客户：</strong><span>{{ sal.custom.name }}</span>
+                                </div>
+                                <div class="col-xs-3 panel-title">
+                                    <strong>日期：</strong><span>{{ sal.date }}</span>
+                                </div>
+                                <div class="col-xs-3 panel-title">
+                                    <strong>金额：</strong><span>{{ sal.total_prices }}</span>
+                                </div>
+
+                            </a>
+                            <div class="col-xs-2">
+                                <form method="post" class="form-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="payid" value="{{ sal.id }}">
+                                    <select class="form-control" name="method">
+                                        <option value="0">现金</option>
+                                        <option value="1">微信</option>
+                                        <option value="2">支付宝</option>
+                                        <option value="3">其他</option>
+                                    </select>
+                                    <input type="submit" value="付款" class="btn btn-primary "/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="collapse{{ sal.id }}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="align-center"><strong>销售详情</strong></div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>产品</th>
+                                    <th>数量</th>
+                                    <th>价格</th>
+                                    <th>折扣</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for pro in sal.detail.all %}
+                                <tr>
+                                    <td>{{ pro.product.name }}</td>
+                                    <td>{{ pro.num }}</td>
+                                    <td>{{ pro.price }}</td>
+                                    <td>{% widthratio pro.scale 1 100 %}%</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

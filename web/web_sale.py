@@ -6,12 +6,13 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.utils.timezone import now, timedelta
 from django.views.decorators.csrf import csrf_exempt
 
 from custom.custom_tool import get_customs
 from custom.models import Custom
 from product.models import Product
-from sales.models import Sales, SalesDetail
+from sales.models import Sales, SalesDetail, SalesPay
 from stock.models import Stock
 from stock.stock_tool import get_stocks
 from utils.response import failed_response, success_response
@@ -55,3 +56,46 @@ def new(request):
 @login_required
 def refunds(request):
     return render_to_response('sale/refunds.html', RequestContext(request, {'sale_active': 1}))
+
+
+@login_required
+def today_sales(request):
+    start = now().date()
+    end = start + timedelta(days=1)
+    sales = Sales.objects.all().filter(created_at__range=(start, end)).order_by('-id')
+    return render_to_response('sale/list.html', RequestContext(request, {'sale_active': 1, 'sales': sales}))
+
+
+@login_required
+def all_sales(request):
+    sales = Sales.objects.all().order_by('-id')
+    return render_to_response('sale/list.html', RequestContext(request, {'sale_active': 1, 'sales': sales}))
+
+
+@login_required
+def pay_sales(request):
+    if request.method == 'GET':
+        sales = Sales.objects.all().filter(pay_status=0)
+        return render_to_response('sale/pay.html',
+                                  RequestContext(request, {'sale_active': 1, 'sales': sales, 'unpay': len(sales)}))
+    else:
+        payid = request.POST.get('payid', '')
+        method = request.POST.get('method', '')
+        error = ''
+        success = ''
+        if not payid:
+            error = '参数错误'
+        else:
+            sal = Sales.objects.get(id=payid)
+            if not sal:
+                error = "订单不存在"
+            else:
+                sp = SalesPay()
+                sp.sales = sal
+                sp.method = method
+                sp.save()
+                success = "付款成功"
+        sales = Sales.objects.all().filter(pay_status=0)
+        return render_to_response('sale/pay.html',
+                                  RequestContext(request, {'sale_active': 1, 'sales': sales, 'unpay': len(sales),
+                                                           'error': error, 'success': success}))

@@ -2,6 +2,8 @@
 # coding: utf-8
 
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from custom.models import Provider
 from  product.models import Product
@@ -59,13 +61,10 @@ class Purchase(models.Model):
         verbose_name_plural = "采购"
         verbose_name = "采购"
 
-# class PurchaseDetailShip(models.Model):
-#     purchase = models.ForeignKey(Purchase, verbose_name="采购产品")
-#     detail = models.ForeignKey(PurchaseDetail, verbose_name="详情")
-#
-#     def __unicode__(self):
-#         return u'%s 详情' % self.purchase
-#
-#     class Meta:
-#         verbose_name_plural = "采购详情"
-#         verbose_name = "采购详情"
+
+# 有采购时更新库存
+@receiver(post_save, sender=Purchase, dispatch_uid="update_stock_purchase")
+def update_stock_when_purchase(sender, instance, **kwargs):
+    stock = instance.stock
+    for item in instance.detail.all():
+        stock.add(item.product.id, item.num)

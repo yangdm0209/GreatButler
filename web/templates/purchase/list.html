@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}
+超级管家-进销存管理系统
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+{% block content %}
+<div class="container">
+
+    {% for pur in purchases %}
+    <div class="panel panel-success">
+    <div class="panel-heading align-center">采购单</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-3">
+                <strong>供应商：</strong><span>{{ pur.provider.name }}</span>
+            </div>
+            <div class="col-xs-3">
+                <strong>仓库：</strong><span>{{ pur.stock.name }}</span>
+            </div>
+            <div class="col-xs-3">
+                <strong>日期：</strong><span>{{ pur.date }}</span>
+            </div>
+        </div>
+        <table class="table table-bordered margin-top-15">
+            <thead>
+            <tr>
+                <th>产品</th>
+                <th>数量</th>
+                <th>价格</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for pro in pur.detail.all %}
+            <tr>
+            <td>{{ pro.product.name }}</td>
+            <td>{{ pro.num }}</td>
+            <td>{{ pro.price }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-xs-3"><strong>合计品项：&nbsp;</strong><span>{{ pur.total_products }}</span>项</div>
+            <div class="col-xs-3"><strong>合计数目：&nbsp;</strong><span>{{ pur.total_nums }}</span>只</div>
+            <div class="col-xs-3"><strong>合计金额：&nbsp;</strong>￥<span>{{ pur.total_prices }}</span></div>
+        </div>
+    </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

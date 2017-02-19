@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}
+超级管家-进销存管理系统
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+{% block content %}
+<div class="container">
+
+    {% for sal in sales %}
+    <div class="panel panel-success">
+        <div class="panel-heading align-center">销售单
+        {% if not sal.pay_status %}<span class="label label-danger">未付款</span>{% endif %}</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-3">
+                    <strong>客户：</strong><span>{{ sal.custom.name }}</span>
+                </div>
+                <div class="col-xs-3">
+                    <strong>仓库：</strong><span>{{ sal.stock.name }}</span>
+                </div>
+                <div class="col-xs-3">
+                    <strong>日期：</strong><span>{{ sal.date }}</span>
+                </div>
+            </div>
+            <table class="table table-bordered margin-top-15">
+                <thead>
+                <tr>
+                    <th>产品</th>
+                    <th>数量</th>
+                    <th>价格</th>
+                    <th>折扣</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for pro in sal.detail.all %}
+                <tr>
+                    <td>{{ pro.product.name }}</td>
+                    <td>{{ pro.num }}</td>
+                    <td>{{ pro.price }}</td>
+                    <td>{% widthratio pro.scale 1 100 %}%</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-xs-3"><strong>合计品项：&nbsp;</strong><span>{{ sal.total_products }}</span>项</div>
+                <div class="col-xs-3"><strong>合计数目：&nbsp;</strong><span>{{ sal.total_nums }}</span>只</div>
+                <div class="col-xs-3"><strong>合计金额：&nbsp;</strong>￥<span>{{ sal.total_prices }}</span></div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

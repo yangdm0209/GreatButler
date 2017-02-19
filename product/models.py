@@ -14,6 +14,7 @@ class Product(models.Model):
     specification = models.CharField(max_length=128, verbose_name="规格", blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     other = models.CharField(max_length=128, verbose_name='其他信息', blank=True)
+    min_stock = models.IntegerField(verbose_name='最小库存', blank=True)
 
     def __unicode__(self):
         return self.name

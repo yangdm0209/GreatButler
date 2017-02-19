@@ -5,6 +5,9 @@
 from django.db import models
 
 # Create your models here.
+from django.db.models.signals import post_save, pre_delete
+from django.dispatch import receiver
+
 from custom.models import Custom
 from product.models import Product
 from stock.models import Stock
@@ -80,3 +83,25 @@ class SalesPay(models.Model):
     class Meta:
         verbose_name_plural = "销售收款"
         verbose_name = "销售收款"
+
+
+# 增加销售付款时更新订单状态为已付款
+@receiver(post_save, sender=SalesPay, dispatch_uid="update_sales_paysts")
+def update_sales_when_pay(sender, instance, **kwargs):
+    instance.sales.pay_status = 1
+    instance.sales.save()
+
+
+# 删除销售付款时更新订单状态为已付款
+@receiver(pre_delete, sender=SalesPay, dispatch_uid="delete_sales_paysts")
+def update_sales_when_delete(sender, instance, **kwargs):
+    instance.sales.pay_status = 0
+    instance.sales.save()
+
+
+# 有销售时更新库存
+@receiver(post_save, sender=Sales, dispatch_uid="update_stock_sales")
+def update_stock_when_purchase(sender, instance, **kwargs):
+    stock = instance.stock
+    for item in instance.detail.all():
+        stock.dec(item.product.id, item.num)

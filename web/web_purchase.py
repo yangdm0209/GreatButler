@@ -5,6 +5,7 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.utils.timezone import now, timedelta
 from django.views.decorators.csrf import csrf_exempt
 
 from custom.custom_tool import get_providers
@@ -53,3 +54,19 @@ def new(request):
 @login_required
 def refunds(request):
     return render_to_response('purchase/refunds.html', RequestContext(request, {'purchase_active': 1}))
+
+
+@login_required
+def today_purchase(request):
+    start = now().date()
+    end = start + timedelta(days=1)
+    purchases = Purchase.objects.all().filter(created_at__range=(start, end)).order_by('-id')
+    return render_to_response('purchase/list.html',
+                              RequestContext(request, {'purchase_active': 1, 'purchases': purchases}))
+
+
+@login_required
+def all_purchase(request):
+    purchases = Purchase.objects.all().order_by('-id')
+    return render_to_response('purchase/list.html',
+                              RequestContext(request, {'purchase_active': 1, 'purchases': purchases}))
