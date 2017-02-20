@@ -50,6 +50,7 @@ urlpatterns = [
     url(r'^stock/$', web_stock.stock),
     url(r'^stock/allocate/$', web_stock.allocate),
     url(r'^stock/list/$', web_stock.list),
+    url(r'^stock/all/list/$', web_stock.all_list),
 
     # 资金相关
 

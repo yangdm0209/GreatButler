@@ -4,16 +4,46 @@
 {% endblock %}
 
 {% block css %}
-<link rel="stylesheet" href="/static/css/bootstrap-table.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap-datepicker3.min.css">
 {% endblock %}
 {% block content %}
 <div class="container">
     <H1 class="hidden">销售退货</H1>
-
+    <div class="input-daterange input-group" id="datepicker">
+        <input type="text" class="input-sm form-control" name="start"/>
+        <span class="input-group-addon">到</span>
+        <input type="text" class="input-sm form-control" name="end"/>
+    </div>
+    <div class="input-group date">
+        <input type="text" class="form-control">
+        <span class="input-group-addon">
+        <i class="glyphicon glyphicon-th"></i>
+        </span>
+    </div>
 </div>
 {% endblock %}
 
 {% block javascript %}
-<script src="/static/js/bootstrap-table.min.js"></script>
-<script src="/static/js/bootstrap-table-zh-CN.min.js"></script>
+<script src="/static/js/bootstrap-datepicker.min.js"></script>
+<script src="/static/js/bootstrap-datepicker.zh-CN.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.input-daterange').datepicker({
+            language: "zh-CN",
+            autoclose: true,//选中之后自动隐藏日期选择框
+            todayBtn: true,//今日按钮
+            format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+        });
+        $('.input-group.date').datepicker({
+            language: "zh-CN",
+            autoclose: true,//选中之后自动隐藏日期选择框
+            todayBtn: true,//今日按钮
+            format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+        });
+    });
+
+
+
+
+</script>
 {% endblock %}

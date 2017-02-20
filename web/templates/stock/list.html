@@ -9,6 +9,7 @@
 {% block content %}
 <div class="container">
     <H1 class="hidden">查看库存</H1>
+    <p class="text-right">{{ today }}</p>
     {% for sto in stocks %}
     <div class="panel panel-success">
         <div class="panel-heading align-center">{{ sto.name }}的库存</div>
@@ -21,6 +22,12 @@
             {% for pro in sto.nums.all %}
             <tr {% if pro.num < 0 %} class="danger" {% endif %}>
             <td>{{ pro.product.name }}</td>
+            <td>{{ pro.num }}</td>
+            </tr>
+            {% endfor %}
+            {% for pro in sto.pros %}
+            <tr {% if pro.num < pro.min %} class="danger" {% endif %}>
+            <td>{{ pro.name }}</td>
             <td>{{ pro.num }}</td>
             </tr>
             {% endfor %}

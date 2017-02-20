@@ -63,13 +63,14 @@ def today_sales(request):
     start = now().date()
     end = start + timedelta(days=1)
     sales = Sales.objects.all().filter(created_at__range=(start, end)).order_by('-id')
-    return render_to_response('sale/list.html', RequestContext(request, {'sale_active': 1, 'sales': sales}))
+    return render_to_response('sale/list.html',
+                              RequestContext(request, {'sale_active': 1, 'sales': sales, 'havelist': len(sales)}))
 
 
 @login_required
 def all_sales(request):
     sales = Sales.objects.all().order_by('-id')
-    return render_to_response('sale/list.html', RequestContext(request, {'sale_active': 1, 'sales': sales}))
+    return render_to_response('sale/list.html', RequestContext(request, {'sale_active': 1, 'sales': sales, 'havelist': len(sales)}))
 
 
 @login_required

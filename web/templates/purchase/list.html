@@ -7,7 +7,9 @@
 {% endblock %}
 {% block content %}
 <div class="container">
-
+    {% if not havelist %}
+    <div class="alert alert-success" role="alert">还没有采购单，加油吧小伙伴~~</div>
+    {% endif %}
     {% for pur in purchases %}
     <div class="panel panel-success">
     <div class="panel-heading align-center">采购单</div>

@@ -11,10 +11,12 @@
     <H1 class="hidden">超级管家主页</H1>
     <div class="row">
         <div class="col-sm-3">
+            <a href="/stock/all/list/">
             <div class="red-block">
                 <span style="color: white">库存预警</span>
-                <div class="warn_nums">0</div>
+                <div class="warn_nums">{{ warns }}</div>
             </div>
+            </a>
         </div>
         <div class="col-sm-3">
             <a href="/purchase/today/list/">

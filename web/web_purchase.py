@@ -62,11 +62,11 @@ def today_purchase(request):
     end = start + timedelta(days=1)
     purchases = Purchase.objects.all().filter(created_at__range=(start, end)).order_by('-id')
     return render_to_response('purchase/list.html',
-                              RequestContext(request, {'purchase_active': 1, 'purchases': purchases}))
+                              RequestContext(request, {'purchase_active': 1, 'purchases': purchases, 'havelist': len(purchases)}))
 
 
 @login_required
 def all_purchase(request):
     purchases = Purchase.objects.all().order_by('-id')
     return render_to_response('purchase/list.html',
-                              RequestContext(request, {'purchase_active': 1, 'purchases': purchases}))
+                              RequestContext(request, {'purchase_active': 1, 'purchases': purchases, 'havelist': len(purchases)}))
