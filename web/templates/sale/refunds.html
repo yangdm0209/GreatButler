@@ -5,6 +5,8 @@
 
 {% block css %}
 <link rel="stylesheet" href="/static/css/bootstrap-datepicker3.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap-toggle.min.css">
+<link rel="stylesheet" href="/static/test.css">
 {% endblock %}
 {% block content %}
 <div class="container">
@@ -20,30 +22,67 @@
         <i class="glyphicon glyphicon-th"></i>
         </span>
     </div>
+
+    <ul class="list-inline">
+        <li class="width-200"><img src="/static/img/android.jpg" style="width:200px; height:200px"/>
+            <div class="form-inline" style="margin-top:5px;">
+                <div class="form-group">
+                    <label for="input_num3">数量</label>
+                    <input type="number" class="form-control" id="input_num3" placeholder="输入数量" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="input_price3">价格</label>
+                    <input type="number" class="form-control" id="input_price3" placeholder="输入价格" value="45.0">
+                </div>
+            </div>
+        </li>
+        <li class="width-200"><img src="/static/img/android.jpg" style="width:200px; height:200px"/>
+            <div class="form-inline" style="margin-top:5px;">
+                <div class="form-group">
+                    <label for="input_num1">数量</label>
+                    <input type="number" class="form-control" id="input_num1" placeholder="输入数量" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="input_price1">价格</label>
+                    <input type="number" class="form-control" id="input_price1" placeholder="输入价格" value="45.0">
+                </div>
+            </div>
+        </li>
+        <li class="width-200"><img src="/static/img/android.jpg" style="width:200px; height:200px"/>
+            <div class="form-inline" style="margin-top:5px;">
+                <div class="form-group">
+                    <label for="input_num2">数量</label>
+                    <input type="number" class="form-control" id="input_num2" placeholder="输入数量" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="input_price2">价格</label>
+                    <input type="number" class="form-control" id="input_price2" placeholder="输入价格" value="45.0">
+                </div>
+            </div>
+        </li>
+        <li class="width-200"><img src="/static/img/android.jpg" style="width:200px; height:200px"/>
+            <div class="form-inline" style="margin-top:5px;">
+                <div class="form-group">
+                    <label for="input_num2">数量</label>
+                    <input type="number" class="form-control" id="input_num2" placeholder="输入数量" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="input_price2">价格</label>
+                    <input type="number" class="form-control" id="input_price2" placeholder="输入价格" value="45.0">
+                </div>
+            </div>
+        </li>
+    </ul>
+
+
 </div>
 {% endblock %}
 
 {% block javascript %}
 <script src="/static/js/bootstrap-datepicker.min.js"></script>
 <script src="/static/js/bootstrap-datepicker.zh-CN.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $('.input-daterange').datepicker({
-            language: "zh-CN",
-            autoclose: true,//选中之后自动隐藏日期选择框
-            todayBtn: true,//今日按钮
-            format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
-        });
-        $('.input-group.date').datepicker({
-            language: "zh-CN",
-            autoclose: true,//选中之后自动隐藏日期选择框
-            todayBtn: true,//今日按钮
-            format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
-        });
-    });
+<script src="/static/js/bootstrap-toggle.min.js"></script>
 
+<script src="/static/test.js"></script>
 
-
-
-</script>
 {% endblock %}

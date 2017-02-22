@@ -26,7 +26,7 @@ class ProductNumAdmin(admin.ModelAdmin):
 @admin.register(Stock)
 class StockAdmin(admin.ModelAdmin):
     list_display = ['name', 'belong', 'detail_table']
-    readonly_fields = ['name', 'belong', 'nums']
+    readonly_fields = ['nums']
     list_display_links = ['name']
     search_fields = ['name']
 
