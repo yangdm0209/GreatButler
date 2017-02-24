@@ -9,7 +9,7 @@ from django.db import models
 class Product(models.Model):
     name = models.CharField(max_length=128, verbose_name="名字", db_index=True)
     price_cost = models.FloatField(verbose_name="进货价")
-    price_wholesale = models.FloatField(verbose_name="批发售价")
+    price_wholesale = models.FloatField(verbose_name="批发售价", blank=True)
     price_retail = models.FloatField(verbose_name="终端售价")
     specification = models.CharField(max_length=128, verbose_name="规格", blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
