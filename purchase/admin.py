@@ -14,6 +14,7 @@ class PurchaseAdmin(admin.ModelAdmin):
     # inlines = (PurchaseDetailShipInline,)
     list_display = ['provider', 'stock', 'created_at', 'detail_table']
     readonly_fields = ['provider', 'stock', 'detail']
+    list_filter = ['created_at']
 
     def detail_list(self, obj):
         pro_list = []
