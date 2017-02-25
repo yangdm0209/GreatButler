@@ -28,7 +28,7 @@ class PurchaseDetail(models.Model):
 class Purchase(models.Model):
     provider = models.ForeignKey(Provider, verbose_name="供应商")
     stock = models.ForeignKey(Stock, verbose_name="仓库")
-    detail = models.ManyToManyField(PurchaseDetail, verbose_name="产品")
+    detail = models.ManyToManyField(PurchaseDetail, verbose_name="产品", related_name="purchase")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='修改时间')
 

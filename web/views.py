@@ -23,7 +23,7 @@ def stock_warns():
     for item in prs:
         procnt = ProductNum.objects.filter(product=item.id).aggregate(procnt=Sum('num'))
         if not procnt['procnt'] or procnt['procnt'] < item.min_stock:
-            print item.name, procnt['procnt']
+            # print item.name, procnt['procnt']
             cnt += 1
     return cnt
 

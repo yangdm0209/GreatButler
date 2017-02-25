@@ -27,7 +27,7 @@ SECRET_KEY = 'd35)6kul*tq@i4qxo&d9m7y4f3e@2h734u!2$qs45ri5bl&6g3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','192.168.0.109']
 
 # 邮件配置
 EMAIL_HOST = 'smtp.exmail.qq.com'

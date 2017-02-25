@@ -59,5 +59,11 @@ class PurchaseAdmin(admin.ModelAdmin):
 
 @admin.register(PurchaseDetail)
 class PurchaseDetailAdmin(admin.ModelAdmin):
-    list_display = ['product', 'num', 'price']
+    list_display = ['product', 'num', 'price', 'purchase_id']
     readonly_fields = ['product', 'num', 'price']
+
+    def purchase_id(self, obj):
+        purchase = ''
+        for p in obj.purchase.all():
+            purchase += '<a href="/admin/purchase/purchase/%d">purchase-%d</a>' % (p.id, p.id)
+        return mark_safe(purchase)
