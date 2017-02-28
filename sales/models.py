@@ -68,6 +68,43 @@ class Sales(models.Model):
         verbose_name = "销售"
 
 
+class Refunds(models.Model):
+    custom = models.ForeignKey(Custom, verbose_name="客户")
+    stock = models.ForeignKey(Stock, verbose_name="仓库")
+    detail = models.ManyToManyField(SalesDetail, verbose_name="产品")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='修改时间')
+
+    def __unicode__(self):
+        return u'%s的退货-%s' % (self.custom, self.date)
+
+    @property
+    def date(self):
+        return self.created_at.date()
+
+    @property
+    def total_products(self):
+        return self.detail.all().count()
+
+    @property
+    def total_nums(self):
+        total = 0
+        for item in self.detail.all():
+            total += item.num
+        return total
+
+    @property
+    def total_prices(self):
+        total = 0
+        for item in self.detail.all():
+            total += item.num * item.price * item.scale
+        return total
+
+    class Meta:
+        verbose_name_plural = "退货"
+        verbose_name = "退货"
+
+
 class SalesPay(models.Model):
     PAY_METHOD = (
         (0, '现金'), (1, '微信'), (2, '支付宝'), (3, '其他'),
@@ -105,3 +142,10 @@ def update_stock_when_sale(sender, instance, **kwargs):
     stock = instance.stock
     for item in instance.detail.all():
         stock.dec(item.product.id, item.num)
+
+# 有退货时更新库存
+@receiver(post_save, sender=Refunds, dispatch_uid="update_stock_refunds")
+def update_stock_when_refund(sender, instance, **kwargs):
+    stock = instance.stock
+    for item in instance.detail.all():
+        stock.add(item.product.id, item.num)

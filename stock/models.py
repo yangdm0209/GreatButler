@@ -95,6 +95,7 @@ class Allocate(models.Model):
     source_stock = models.ForeignKey(Stock, verbose_name="转出仓库", related_name='source')
     dest_stock = models.ForeignKey(Stock, verbose_name="转入仓库", related_name='dest')
     nums = models.ManyToManyField(AllocateNum, verbose_name="调拨产品", related_name='allocate')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
 
     def __unicode__(self):
         return u'%s调入%s' % (self.source_stock.name, self.dest_stock.name)

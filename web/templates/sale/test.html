@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}
+超级管家-进销存管理系统
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/bootstrap-datepicker3.min.css">
+<link rel="stylesheet" href="/static/css/bootstrap-toggle.min.css">
+<link rel="stylesheet" href="/static/test.css">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <H1 class="hidden">销售退货</H1>
+    <div class="input-daterange input-group" id="datepicker">
+        <input type="text" class="input-sm form-control" name="start"/>
+        <span class="input-group-addon">到</span>
+        <input type="text" class="input-sm form-control" name="end"/>
+    </div>
+    <div class="input-group date">
+        <input type="text" class="form-control">
+        <span class="input-group-addon">
+        <i class="glyphicon glyphicon-th"></i>
+        </span>
+    </div>
+
+    <ul class="list-inline">
+        <li class="width-200"><img src="/static/img/android.jpg" style="width:200px; height:200px"/>
+            <div class="form-inline" style="margin-top:5px;">
+                <div class="form-group">
+                    <label for="input_num3">数量</label>
+                    <input type="number" class="form-control" id="input_num3" placeholder="输入数量" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="input_price3">价格</label>
+                    <input type="number" class="form-control" id="input_price3" placeholder="输入价格" value="45.0">
+                </div>
+            </div>
+        </li>
+        <li class="width-200"><img src="/static/img/android.jpg" style="width:200px; height:200px"/>
+            <div class="form-inline" style="margin-top:5px;">
+                <div class="form-group">
+                    <label for="input_num1">数量</label>
+                    <input type="number" class="form-control" id="input_num1" placeholder="输入数量" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="input_price1">价格</label>
+                    <input type="number" class="form-control" id="input_price1" placeholder="输入价格" value="45.0">
+                </div>
+            </div>
+        </li>
+        <li class="width-200"><img src="/static/img/android.jpg" style="width:200px; height:200px"/>
+            <div class="form-inline" style="margin-top:5px;">
+                <div class="form-group">
+                    <label for="input_num2">数量</label>
+                    <input type="number" class="form-control" id="input_num2" placeholder="输入数量" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="input_price2">价格</label>
+                    <input type="number" class="form-control" id="input_price2" placeholder="输入价格" value="45.0">
+                </div>
+            </div>
+        </li>
+        <li class="width-200"><img src="/static/img/android.jpg" style="width:200px; height:200px"/>
+            <div class="form-inline" style="margin-top:5px;">
+                <div class="form-group">
+                    <label for="input_num2">数量</label>
+                    <input type="number" class="form-control" id="input_num2" placeholder="输入数量" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="input_price2">价格</label>
+                    <input type="number" class="form-control" id="input_price2" placeholder="输入价格" value="45.0">
+                </div>
+            </div>
+        </li>
+    </ul>
+
+
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="/static/js/bootstrap-datepicker.min.js"></script>
+<script src="/static/js/bootstrap-datepicker.zh-CN.min.js"></script>
+<script src="/static/js/bootstrap-toggle.min.js"></script>
+
+<script src="/static/test.js"></script>
+
+{% endblock %}

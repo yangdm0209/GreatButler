@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from product.models import Product
 from stock.models import Stock, Allocate, AllocateNum, ProductNum
+from stock.views import calc_stock, detail_stock
 from utils.response import failed_response, success_response
 
 
@@ -47,24 +48,19 @@ def allocate(request):
 
 @login_required
 def list(request):
+    ss = []
     stocks = Stock.objects.all()
-    return render_to_response('stock/list.html',
-                              RequestContext(request, {'stock_active': 1, 'stocks': stocks, 'today': now().date()}))
+    for s in stocks:
+        ss.append({'name': s.name, 'pros': detail_stock(s.id)})
+    return render_to_response('stock/detail.html',
+                              RequestContext(request, {'stock_active': 1, 'stocks': ss, 'today': now().date()}))
 
 
 @login_required
 def all_list(request):
-    stocks = [{'name': '所有仓库汇总', 'pros': []}]
-    products = Product.objects.all()
-    # product_stock = [{'product': 1, 'pcnt': 1048}, {'product': 2, 'pcnt': 985}, {'product': 3, 'pcnt': 990}]
-    product_stock = ProductNum.objects.all().values('product').annotate(pcnt=Sum('num'))
-    for pro in products:
-        num = 0
-        for ps in product_stock:
-            if ps['product'] == pro.id:
-                num = ps['pcnt']
-                break
-        stocks[0]['pros'].append({'name': pro.name, 'num': num, 'min': pro.min_stock})
-
+    ss = []
+    stocks = Stock.objects.all()
+    for s in stocks:
+        ss.append({'name': s.name, 'pros': calc_stock(s.id)})
     return render_to_response('stock/list.html',
-                              RequestContext(request, {'stock_active': 1, 'stocks': stocks, 'today': now().date()}))
+                              RequestContext(request, {'stock_active': 1, 'stocks': ss, 'today': now().date()}))

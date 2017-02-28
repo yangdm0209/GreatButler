@@ -9,6 +9,6 @@ def get_products(request):
     if not request.user.is_active:
         return need_login()
     products = []
-    for p in Product.objects.all():
+    for p in Product.objects.all().order_by('name'):
         products.append({'id': p.id, 'name': p.name, 'price': p.price_retail, 'cost': p.price_cost})
     return success_response(products)

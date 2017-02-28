@@ -65,6 +65,7 @@ class AllocateNumAdmin(admin.ModelAdmin):
 class AllocateAdmin(admin.ModelAdmin):
     list_display = ['source_stock', 'dest_stock', 'detail_table']
     readonly_fields = ['source_stock', 'dest_stock', 'nums']
+    list_filter = ['source_stock', 'dest_stock']
 
     def detail_table(self, obj):
         html = '''

@@ -4,85 +4,73 @@
 {% endblock %}
 
 {% block css %}
-<link rel="stylesheet" href="/static/css/bootstrap-datepicker3.min.css">
-<link rel="stylesheet" href="/static/css/bootstrap-toggle.min.css">
-<link rel="stylesheet" href="/static/test.css">
+<link rel="stylesheet" href="/static/css/bootstrap-editable.css">
 {% endblock %}
 {% block content %}
 <div class="container">
     <H1 class="hidden">销售退货</H1>
-    <div class="input-daterange input-group" id="datepicker">
-        <input type="text" class="input-sm form-control" name="start"/>
-        <span class="input-group-addon">到</span>
-        <input type="text" class="input-sm form-control" name="end"/>
+
+    <div class="panel panel-info">
+        <div class="panel-heading align-center big-font"><span class="hidden-print">新增</span>销售退货单</div>
+        <div class="panel-body">
+            <!--<form class="form-inline" method="post">-->
+            <div class="form-inline">
+                {% csrf_token %}
+                <div class="form-group col-sm-4">
+                    <label class="control-label">客户:&nbsp;&nbsp;&nbsp;</label>
+                    <select class="form-control" id="custom">
+                        {% for p in customs %}
+                        <option data-index="{{ p.id }}">{{ p.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="control-label">仓库:&nbsp;&nbsp;&nbsp;</label>
+                    <select class="form-control" id="stock">
+                        {% for s in stocks %}
+                        <option data-index="{{ s.id }}">{{ s.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input id="submit" onclick="submit()" value="提交" class="btn btn-primary col-sm-2 disabled hidden-print"/>
+            </div>
+
+
+            <div class="panel-body">
+                <table id="productDetail" class="table table-bordered">
+                    <caption style="font-size:18px; text-align:center;"><strong>货品清单</strong></caption>
+                    <colgroup>
+                        <col style="width:25%;">
+                        <col style="width:25%;">
+                        <col style="width:25%;">
+                        <col style="width:15%;">
+                        <col style="width:10%;">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th class="hidden">id</th>
+                        <th>名称</th>
+                        <th>数量</th>
+                        <th>单价</th>
+                        <th>折扣(0.1-1)</th>
+                        <th class="hidden-print"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div>
+                    <div class="col-xs-3"><strong>合计品项：&nbsp;</strong><span id="totalPros">0</span>项</div>
+                    <div class="col-xs-3"><strong>合计数目：&nbsp;</strong><span id="totalNums">0</span>只</div>
+                    <div class="col-xs-3"><strong>合计金额：&nbsp;</strong>￥<span id="totalPrice">0</span></div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="input-group date">
-        <input type="text" class="form-control">
-        <span class="input-group-addon">
-        <i class="glyphicon glyphicon-th"></i>
-        </span>
-    </div>
-
-    <ul class="list-inline">
-        <li class="width-200"><img src="/static/img/android.jpg" style="width:200px; height:200px"/>
-            <div class="form-inline" style="margin-top:5px;">
-                <div class="form-group">
-                    <label for="input_num3">数量</label>
-                    <input type="number" class="form-control" id="input_num3" placeholder="输入数量" value="1">
-                </div>
-                <div class="form-group">
-                    <label for="input_price3">价格</label>
-                    <input type="number" class="form-control" id="input_price3" placeholder="输入价格" value="45.0">
-                </div>
-            </div>
-        </li>
-        <li class="width-200"><img src="/static/img/android.jpg" style="width:200px; height:200px"/>
-            <div class="form-inline" style="margin-top:5px;">
-                <div class="form-group">
-                    <label for="input_num1">数量</label>
-                    <input type="number" class="form-control" id="input_num1" placeholder="输入数量" value="1">
-                </div>
-                <div class="form-group">
-                    <label for="input_price1">价格</label>
-                    <input type="number" class="form-control" id="input_price1" placeholder="输入价格" value="45.0">
-                </div>
-            </div>
-        </li>
-        <li class="width-200"><img src="/static/img/android.jpg" style="width:200px; height:200px"/>
-            <div class="form-inline" style="margin-top:5px;">
-                <div class="form-group">
-                    <label for="input_num2">数量</label>
-                    <input type="number" class="form-control" id="input_num2" placeholder="输入数量" value="1">
-                </div>
-                <div class="form-group">
-                    <label for="input_price2">价格</label>
-                    <input type="number" class="form-control" id="input_price2" placeholder="输入价格" value="45.0">
-                </div>
-            </div>
-        </li>
-        <li class="width-200"><img src="/static/img/android.jpg" style="width:200px; height:200px"/>
-            <div class="form-inline" style="margin-top:5px;">
-                <div class="form-group">
-                    <label for="input_num2">数量</label>
-                    <input type="number" class="form-control" id="input_num2" placeholder="输入数量" value="1">
-                </div>
-                <div class="form-group">
-                    <label for="input_price2">价格</label>
-                    <input type="number" class="form-control" id="input_price2" placeholder="输入价格" value="45.0">
-                </div>
-            </div>
-        </li>
-    </ul>
-
-
 </div>
 {% endblock %}
 
 {% block javascript %}
-<script src="/static/js/bootstrap-datepicker.min.js"></script>
-<script src="/static/js/bootstrap-datepicker.zh-CN.min.js"></script>
-<script src="/static/js/bootstrap-toggle.min.js"></script>
-
-<script src="/static/test.js"></script>
-
+<script src="/static/js/bootstrap-editable.min.js"></script>
+<script src="/static/sale/refunds.js"></script>
 {% endblock %}

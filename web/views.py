@@ -7,6 +7,7 @@ from django.shortcuts import render, render_to_response
 
 # Create your views here.
 from django.template import RequestContext
+from django.utils.datetime_safe import date
 from django.utils.timezone import now, timedelta
 
 from product.models import Product
