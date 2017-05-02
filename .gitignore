@@ -1,4 +1,4 @@
 *.pyc
 .idea
 migrations
-*.sqlite3
+*.csv
